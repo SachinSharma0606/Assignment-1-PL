@@ -1,0 +1,31 @@
+//Series Sum
+
+#include <stdio.h>
+#include <math.h>
+
+int main() 
+{
+    double x,s=0,y;
+    int n,i;
+    printf("Enter the value of x (-1 < x <= 1): ");
+    scanf("%lf",&x);
+    if (x<=-1||x>1) 
+    {
+        printf("Invalid input. x must be in the range (-1, 1].\n");
+        return 1;
+    }
+    printf("Enter the value of n (n > 100): ");
+    scanf("%d",&n);
+    if (n<=100) 
+    {
+        printf("Invalid input. n must be greater than 100.\n");
+        return 1;
+    }
+    for (i=1;i<=n;i++) 
+    {
+        y=(pow(-1,i-1)*pow(x,i))/i;
+        s=s+y;
+    }
+    printf("The sum of the series is: %.10f\n", s);
+    return 0;
+}
