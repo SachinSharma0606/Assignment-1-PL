@@ -1,0 +1,68 @@
+#include <stdio.h>
+#include <stdbool.h>
+#include <math.h>
+
+#define LIMIT 28123
+
+// Function to calculate the sum of proper divisors of a number
+int sum_of_proper_divisors(int n) {
+    int sum = 1; // 1 is always a proper divisor
+    int sqrt_n = (int)sqrt(n);
+    for (int i = 2; i <= sqrt_n; i++) {
+        if (n % i == 0) {
+            sum += i;
+            if (i != n / i) {
+                sum += n / i;
+            }
+        }
+    }
+    return sum;
+}
+
+// Function to find all abundant numbers up to a given limit
+void find_abundant_numbers(int limit, int *abundant_numbers, int *num_abundant) {
+    for (int i = 12; i <= limit; i++) {
+        if (sum_of_proper_divisors(i) > i) {
+            abundant_numbers[(*num_abundant)++] = i;
+        }
+    }
+}
+
+// Function to find the sum of all positive integers that cannot be written as the sum of two abundant numbers
+int find_non_sum_numbers(int limit, int *abundant_numbers, int num_abundant) {
+    bool can_be_written[limit + 1] = { false };
+    
+    for (int i = 0; i < num_abundant; i++) {
+        for (int j = i; j < num_abundant; j++) {
+            int abundant_sum = abundant_numbers[i] + abundant_numbers[j];
+            if (abundant_sum <= limit) {
+                can_be_written[abundant_sum] = true;
+            }
+        }
+    }
+    
+    int sum = 0;
+    for (int i = 1; i <= limit; i++) {
+        if (!can_be_written[i]) {
+            sum += i;
+        }
+    }
+    
+    return sum;
+}
+
+int main() {
+    int abundant_numbers[LIMIT] = { 0 };
+    int num_abundant = 0;
+    
+    // Find all abundant numbers up to LIMIT
+    find_abundant_numbers(LIMIT, abundant_numbers, &num_abundant);
+    
+    // Calculate the sum of all positive integers that cannot be written as the sum of two abundant numbers
+    int result = find_non_sum_numbers(LIMIT, abundant_numbers, num_abundant);
+    
+    // Print the result
+    printf("The sum of all positive integers which cannot be written as the sum of two abundant numbers is: %d\n", result);
+    
+    return 0;
+}
