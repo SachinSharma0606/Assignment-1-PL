@@ -1,0 +1,31 @@
+//Program to check co-prime.
+
+#include <stdio.h>
+#include <math.h>
+
+int main() 
+{
+    int a,b,i,x;
+    printf("Enter the numbers: );
+    scanf("%d",&a);
+    scanf("%d",&b);
+    if(b>a)
+    {
+        i=b;
+        b=a;
+        a=i;
+    }
+    for(i=2;i<=sqrt(b);i++)
+    {
+        if(b%i==0)
+        {
+            if(a%i==0||a%(b/i)==0)
+            {
+                printf("%d and %d are not co-prime.",a,b);
+                return 0;
+            }
+        }
+    }
+    printf("%d and %d are co-prime.",a,b);
+    return 0;
+}
