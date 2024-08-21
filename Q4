@@ -1,0 +1,35 @@
+//Amicable Number 
+
+#include <stdio.h>
+#include <math.h>
+
+int main() 
+{
+    int n,s=1,y=1,i,x;
+    //printf("Enter the numbers: ");
+    scanf("%d",&n);
+    scanf("%d",&x);
+    for(i=2;i<=sqrt(n);i++)
+    {
+        if(n%i==0)
+        {
+            s=s+i;
+            if(i!=sqrt(n))
+                s=s+(n/i);
+        }
+    }
+    for(i=2;i<=sqrt(x);i++)
+    {
+        if(x%i==0)
+        {
+            y=y+i;
+            if(i!=sqrt(x))
+                y=y+(x/i);
+        }
+    }    
+    if(y==n&&s==x)
+        printf("%d and %d are amicable numbers.",n,x);
+    else
+        printf("%d and %d are not amicable numbers.",n,x);
+    return 0;
+}
