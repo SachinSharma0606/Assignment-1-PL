@@ -1,0 +1,61 @@
+//Triangle
+
+#include <stdio.h>
+#include <math.h>
+#include <stdbool.h>
+
+double distance(double x1, double y1, double x2, double y2) 
+{
+    return sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+}
+
+bool areCollinear(double x1, double y1, double x2, double y2, double x3, double y3) 
+{
+    double dx1 = x2 - x1;
+    double dy1 = y2 - y1;
+    double dx2 = x3 - x2;
+    double dy2 = y3 - y2;
+
+    
+    return (dy1 * dx2 == dy2 * dx1);
+}
+
+void classifyTriangle(double d1, double d2, double d3) 
+{
+    if (d1 == d2 && d2 == d3) 
+    {
+        printf("\nThe triangle is Equilateral.\n");
+    } 
+    else if (d1 == d2 || d2 == d3 || d1 == d3) 
+    {
+        printf("\nThe triangle is Isosceles.\n");
+    } 
+    else 
+    {
+        printf("\nThe triangle is Scalene.\n");
+    }
+}
+
+int main() {
+    double x1, y1, x2, y2, x3, y3;
+
+    printf("Enter the coordinates of the first point (x1 y1): ");
+    scanf("%lf %lf", &x1, &y1);
+    printf("Enter the coordinates of the second point (x2 y2): ");
+    scanf("%lf %lf", &x2, &y2);
+    printf("Enter the coordinates of the third point (x3 y3): ");
+    scanf("%lf %lf", &x3, &y3);
+    double d1 = distance(x1, y1, x2, y2);
+    double d2 = distance(x2, y2, x3, y3);
+    double d3 = distance(x3, y3, x1, y1);
+
+    if (areCollinear(x1, y1, x2, y2, x3, y3)) 
+    {
+        printf("\nThe points are collinear.\n");
+    } 
+    else 
+    {
+        classifyTriangle(d1, d2, d3);
+    }
+    return 0;
+}
