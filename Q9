@@ -1,0 +1,35 @@
+void checkLines(double m1, double c1, double m2, double c2) {
+    // Determine the relationship using the slopes
+    int relationship;
+
+    if (m1 == m2) {
+        if (c1 == c2) {
+            relationship = 1; // Same line
+        } else {
+            relationship = 2; // Parallel lines
+        }
+    } else if (m1 * m2 == -1) {
+        relationship = 3; // Perpendicular lines
+    } else {
+        relationship = 4; // Intersecting lines with angle θ ≠ 90°
+    }
+
+    switch (relationship) 
+    {
+        case 1:
+            printf("The lines are the same.\n");
+            break;
+        case 2:
+            printf("The lines are parallel.\n");
+            break;
+        case 3:
+            printf("The lines are perpendicular.\n");
+            break;
+        case 4:
+            printf("The lines are intersecting with an angle θ ≠ 90°.\n");
+            break;
+        default:
+            printf("Unexpected relationship.\n");
+            break;
+    }
+}
