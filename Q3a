@@ -1,0 +1,27 @@
+//Perfect Number (a)
+
+#include <stdio.h>
+#include <math.h>
+
+int main() 
+{
+    int n,s=1,i,x;
+    printf("Enter the number: ");
+    scanf("%d",&n);
+    for(i=2;i<=sqrt(n);i++)
+    {
+        if(n%i==0)
+        {
+            s=s+i;
+            if(i!=sqrt(n))
+                s=s+(n/i);
+        }
+    }
+    if(n==s)
+        printf("%d is a perfect number.",n);
+    else if(n>s)
+        printf("%d is a deficient number.",n);
+    else
+        printf("%d is an abundant number.",n);
+    return 0;
+}
