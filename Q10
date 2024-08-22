@@ -1,0 +1,24 @@
+//String encrypt
+
+#include <stdio.h>
+
+int main() 
+{
+    char a[50];
+    printf("Enter the string: ");
+    scanf("%s",a);
+    printf("\nThe encrypted string is: ");
+    for(int i=0;a[i]!='\0';i++)
+    {
+        if(a[i]=='a')
+        {
+            a[i]='b';
+        }
+        else if(a[i]=='A')
+        {
+            a[i]='B';
+        }
+        printf("%c",a[i]);
+    }
+    return 0;
+}
