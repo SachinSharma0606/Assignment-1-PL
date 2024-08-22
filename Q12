@@ -1,0 +1,224 @@
+//Set Operations
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int compare(const void *a, const void *b) 
+{
+    return (*(int*)a - *(int*)b);
+}
+
+void sort_arrays(int A[], int n, int B[], int m) 
+{
+    qsort(A, n, sizeof(int), compare);
+    qsort(B, m, sizeof(int), compare);
+}
+
+void union_sets(int A[], int n, int B[], int m, int result[], int *size) 
+{
+    int i=0,j=0,k=0;
+    // Traverse both arrays
+    while (i < n && j < m) 
+    {
+        if (A[i] < B[j]) 
+        {
+            result[k++] = A[i++];
+        } 
+        else if (A[i] > B[j]) 
+        {
+            result[k++] = B[j++];
+        } 
+        else 
+        {
+            result[k++] = A[i++];
+            j++;
+        }
+    }
+
+    // Copy remaining elements
+    while (i < n) 
+    {
+        result[k++] = A[i++];
+    }
+    while (j < m) 
+    {
+        result[k++] = B[j++];
+    }
+
+    *size = k;
+}
+
+void intersection_sets(int A[], int n, int B[], int m, int result[], int *size)
+{
+    int i=0,j=0,k=0;
+    // Traverse both arrays
+    while (i < n && j < m) 
+    {
+        if (A[i] < B[j]) 
+        {
+            i++;
+        } 
+        else if (A[i] > B[j]) 
+        {
+            j++;
+        } 
+        else 
+        {
+            result[k++] = A[i++];
+            j++;
+        }
+    }
+
+    *size = k;
+}
+
+void set_difference(int A[], int n, int B[], int m, int result1[], int *size1, int result2[], int *size2) 
+{
+    int i=0,j=0,k1=0,k2=0;
+    // A \ B
+    while (i < n && j < m) 
+    {
+        if (A[i] < B[j]) 
+        {
+            result1[k1++] = A[i++];
+        } 
+        else if (A[i] > B[j]) 
+        {
+            j++;
+        } 
+        else 
+        {
+            i++;
+            j++;
+        }
+    }
+    while (i < n) 
+    {
+        result1[k1++] = A[i++];
+    }
+    *size1 = k1;
+
+    // B \ A
+    i = 0;
+    j = 0;
+    while (i < n && j < m) 
+    {
+        if (A[i] < B[j]) 
+        {
+            i++;
+        } 
+        else if (A[i] > B[j]) 
+        {
+            result2[k2++] = B[j++];
+        } 
+        else 
+        {
+            i++;
+            j++;
+        }
+    }
+    while (j < m) 
+    {
+        result2[k2++] = B[j++];
+    }
+    *size2 = k2;
+}
+
+void symmetric_difference(int A[], int n, int B[], int m, int result[], int *size) 
+{
+    int i=0,j=0,k=0;
+    // Traverse both arrays
+    while (i < n && j < m) 
+    {
+        if (A[i] < B[j]) 
+        {
+            result[k++] = A[i++];
+        } 
+        else if (A[i] > B[j]) 
+        {
+            result[k++] = B[j++];
+        } 
+        else 
+        {
+            i++;
+            j++;
+        }
+    }
+    while (i < n) 
+    {
+        result[k++] = A[i++];
+    }
+    while (j < m) 
+    {
+        result[k++] = B[j++];
+    }
+
+    *size = k;
+}
+
+void print_array(int arr[], int size) 
+{
+    if (size == 0) 
+    {
+        printf("Empty\n");
+    } 
+    else 
+    {
+        for (int i = 0; i < size; i++) 
+        {
+            printf("%d ", arr[i]);
+        }
+        printf("\n");
+    }
+}
+
+void print_set_operations(int A[], int n, int B[], int m) 
+{
+    int result[200], size;
+    
+    printf("Union of A and B: ");
+    union_sets(A, n, B, m, result, &size);
+    print_array(result, size);
+    
+    printf("\nIntersection of A and B: ");
+    intersection_sets(A, n, B, m, result, &size);
+    print_array(result, size);
+    
+    int diff1[100], diff2[100];
+    int size1, size2;
+    set_difference(A, n, B, m, diff1, &size1, diff2, &size2);
+    
+    printf("\nA \\ B: ");
+    print_array(diff1, size1);
+    
+    printf("\nB \\ A: ");
+    print_array(diff2, size2);
+    
+    printf("\nSymmetric Difference of A and B: ");
+    symmetric_difference(A, n, B, m, result, &size);
+    print_array(result, size);
+}
+
+
+int main() 
+{
+    int A[100],B[100],m,n,i;
+    printf("Enter size of set A: ");
+    scanf("%d",&m);
+    printf("Enter elements of A: ");
+    for(i=0;i<m;i++)
+    {
+        scanf("%d",&A[i]);
+    }
+    printf("\nEnter size of set B: ");
+    scanf("%d",&n);
+    printf("Enter elements of B: ");
+    for(i=0;i<n;i++)
+    {
+        scanf("%d",&B[i]);
+    }
+    printf("\n\n");
+    sort_arrays(A, m, B, n);
+    print_set_operations(A, m, B, n);
+    return 0;
+}
