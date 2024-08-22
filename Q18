@@ -1,0 +1,41 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define BUFFER_SIZE 1024
+#define MAX_KEYWORD_LENGTH 100
+
+// Function to count the occurrences of a keyword in a given text
+int count_keyword_occurrences(FILE *file, const char *keyword) 
+{
+    char buffer[BUFFER_SIZE];
+    int keyword_length = strlen(keyword);
+    int count = 0;
+    while (fgets(buffer, sizeof(buffer), file)) 
+    {
+        char *pos = buffer;
+        while ((pos = strstr(pos, keyword)) != NULL) 
+        {
+            count++;
+            pos += keyword_length;  // Move past the last found occurrence
+        }
+    }
+    return count;
+}
+
+int main() 
+{
+    char keyword[MAX_KEYWORD_LENGTH];
+    printf("Enter the keyword: ");
+    scanf("%s",keyword);
+    FILE *file = fopen("", "r");
+    if (file == NULL) 
+    {
+        perror("Error opening file");
+        return 1;
+    }
+    int frequency = count_keyword_occurrences(file, keyword);
+    fclose(file);
+    printf("The frequency of the keyword \"%s\" is: %d\n", keyword, frequency);
+    return 0;
+}
