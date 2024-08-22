@@ -1,0 +1,50 @@
+//Triangle Number
+
+#include <stdio.h>
+#include <math.h>
+
+// Function to count the number of divisors of a number
+int count_divisors(int n) 
+{
+    int count = 0;
+    int root = (int)sqrt(n);
+    for (int i = 1; i <= root; i++) 
+    {
+        if (n % i == 0) 
+        {
+            if (i * i == n) 
+            {
+                count++;
+            } 
+            else 
+            {
+                count += 2; 
+            }
+        }
+    }
+    return count;
+}
+
+// Function to find the first triangle number with more than min_divisors divisors
+int find_triangle_number_with_divisors() 
+{
+    int i=1;
+    while(1) 
+    {
+        // Compute the i-th triangle number
+        int triangle_number=i*(i+1)/2;
+        // Count the number of divisors of the triangle number
+        if (count_divisors(triangle_number) >500) 
+        {
+            return triangle_number;
+        }
+        i++;
+    }
+}
+
+int main() 
+{
+    int n = find_triangle_number_with_divisors();
+    printf("The 1st triangle number to have over 500 divisors is: %d",n);
+    return 0;
+}
